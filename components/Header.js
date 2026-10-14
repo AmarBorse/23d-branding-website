@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/content/site";
+import ThemeToggle from "./ThemeToggle";
 import s from "./Header.module.css";
 
 // At the top: logo + nav pill + "Start a Project".
@@ -55,12 +56,16 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <span className={s.divider} aria-hidden="true" />
+            <ThemeToggle />
           </nav>
 
           <Link href="/contact" className={`${s.cta} ${s.side}`} tabIndex={floating ? -1 : 0}>
             Start a Project
           </Link>
 
+          <div className={s.mobileActions}>
+          <ThemeToggle className={s.mobileToggle} />
           <button
             className={`${s.burger} ${open ? s.open : ""}`}
             onClick={() => setOpen(!open)}
@@ -70,6 +75,7 @@ export default function Header() {
           >
             <span /><span />
           </button>
+          </div>
         </div>
       </motion.header>
 
