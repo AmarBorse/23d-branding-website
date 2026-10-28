@@ -23,6 +23,8 @@ export const site = {
     text2: "At 23D Branding, we combine thoughtful design with practical digital solutions to help businesses communicate with clarity, build trust, and create a consistent presence across platforms.",
   },
 
+  servicesIntro: "From identity to digital presence, we bring the important pieces of your brand together.",
+
   clientsTagline: "Built on Collaboration. Driven by Creativity.",
 
   cta: { ask: "Have brand in mind?", line: "Let’s make it happen.", button: "Start the Project" },

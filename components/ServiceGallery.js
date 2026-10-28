@@ -12,7 +12,7 @@ function Tile({ s, ratio, index = 0, wide = false }) {
   const y = useTransform(scrollYProgress, [0, 1], ["-2.5%", "2.5%"]);
   return (
     <motion.figure ref={ref} className={`stile ${wide ? "stile--wide" : ""}`} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }}>
-      <Link href="/services" className="stile__link" aria-label={s.title}>
+      <Link href={s.id ? `/services#${s.id}` : "/services"} className="stile__link" aria-label={s.title}>
         <motion.div className="stile__media" style={{ aspectRatio: ratio }}
           variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.2, delay: (index % 2) * 0.12, ease } } }}>
           <motion.div className="stile__parallax" style={{ y }}>

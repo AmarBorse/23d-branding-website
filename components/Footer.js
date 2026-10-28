@@ -8,8 +8,8 @@ export default function Footer() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
   // the giant "BRANDING 23D" words slide towards each other as the footer comes into view
-  const leftX = useTransform(scrollYProgress, [0, 1], ["-8%", "0%"]);
-  const rightX = useTransform(scrollYProgress, [0, 1], ["12%", "0%"]);
+  const leftX = useTransform(scrollYProgress, [0, 1], ["-6%", "0%"]);
+  const rightX = useTransform(scrollYProgress, [0, 1], ["10%", "0%"]);
   const chat = site.whatsapp || "/contact";
   const chatExternal = chat.startsWith("http");
 
