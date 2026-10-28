@@ -7,8 +7,8 @@ import { site } from "@/content/site";
 import ThemeToggle from "./ThemeToggle";
 import s from "./Header.module.css";
 
-// At the top: logo + nav pill + "Start a Project".
-// After scrolling: logo and button slide away, only the white nav pill floats (like sarbat.in).
+// At the top: 23D logo, underlined links + day/night switch, white "Start the Project" pill.
+// After scrolling: logo and button slide away and the links float in a dark glass pill.
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -42,7 +42,8 @@ export default function Header() {
       >
         <div className={s.inner}>
           <Link href="/" className={`${s.logo} ${s.side}`} aria-label={`${site.fullName} home`} tabIndex={floating ? -1 : 0}>
-            <span className={s.badge} aria-hidden="true">{site.name}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo-23d.png" alt="23D Branding Solutions" width={252} height={139} />
           </Link>
 
           <nav className={s.nav} aria-label="Main">
@@ -57,24 +58,24 @@ export default function Header() {
               </Link>
             ))}
             <span className={s.divider} aria-hidden="true" />
-            <ThemeToggle />
+            <ThemeToggle className={s.toggle} />
           </nav>
 
           <Link href="/contact" className={`${s.cta} ${s.side}`} tabIndex={floating ? -1 : 0}>
-            Start a Project
+            Start the Project<span aria-hidden="true">➔</span>
           </Link>
 
           <div className={s.mobileActions}>
-          <ThemeToggle className={s.mobileToggle} />
-          <button
-            className={`${s.burger} ${open ? s.open : ""}`}
-            onClick={() => setOpen(!open)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-          >
-            <span /><span />
-          </button>
+            <ThemeToggle className={s.mobileToggle} />
+            <button
+              className={`${s.burger} ${open ? s.open : ""}`}
+              onClick={() => setOpen(!open)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+            >
+              <span /><span />
+            </button>
           </div>
         </div>
       </motion.header>
@@ -91,7 +92,7 @@ export default function Header() {
                 </motion.div>
               ))}
             </nav>
-            <Link href="/contact" className={s.cta}>Start a Project</Link>
+            <Link href="/contact" className={s.cta}>Start the Project<span aria-hidden="true">➔</span></Link>
           </motion.div>
         )}
       </AnimatePresence>

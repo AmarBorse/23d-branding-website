@@ -8,12 +8,14 @@ export const metadata = { title: "Work" };
 export default function WorkPage() {
   return (
     <>
-      <section className="page-hero container">
-        <FadeIn as="h1" className="page-title">{site.work.title}</FadeIn>
-        <FadeIn as="p" className="lead" delay={0.1}>{site.work.text}</FadeIn>
+      <section className="page-hero">
+        <div className="container">
+          <FadeIn as="h1" className="page-title">{site.work.title}</FadeIn>
+          <FadeIn as="p" className="lead" delay={0.1}>{site.work.text}</FadeIn>
+        </div>
       </section>
-      <section className="container section--work">
-        <Masonry projects={projects} categories={categories} />
+      <section className="container section section--work">
+        <Masonry projects={projects} categories={categories.length > 2 ? categories : null} />
       </section>
     </>
   );

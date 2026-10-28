@@ -6,19 +6,23 @@ export const metadata = { title: "Contact" };
 
 export default function Contact() {
   return (
-    <section className="page-hero container contact">
-      <div>
-        <FadeIn as="h1" className="page-title">{site.contact.title}</FadeIn>
-        <FadeIn as="p" className="lead" delay={0.1}>{site.contact.text}</FadeIn>
-        <FadeIn delay={0.2} className="contact__direct">
+    <>
+      <section className="page-hero">
+        <div className="container">
+          <FadeIn as="h1" className="page-title">{site.contact.title}</FadeIn>
+          <FadeIn as="p" className="lead" delay={0.1}>{site.contact.text}</FadeIn>
+        </div>
+      </section>
+      <section className="section container contact">
+        <FadeIn delay={0.1} className="contact__direct">
           <a className="contact__email" href={`mailto:${site.email}`}>{site.email}</a>
           <span>{site.location}</span>
           <span className="contact__socials">
             {site.socials.map((s) => <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.label}</a>)}
           </span>
         </FadeIn>
-      </div>
-      <FadeIn delay={0.2} className="contact__form"><ContactForm /></FadeIn>
-    </section>
+        <FadeIn delay={0.2} className="contact__form"><ContactForm /></FadeIn>
+      </section>
+    </>
   );
 }

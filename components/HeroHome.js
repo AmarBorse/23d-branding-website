@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { site } from "@/content/site";
-import LogoTicker from "./LogoTicker";
+import ImageHeading from "./ImageHeading";
 import Magnetic from "./Magnetic";
 
 const ease = [0.22, 1, 0.36, 1];
@@ -14,51 +15,39 @@ const up = (delay) => ({
 
 export default function HeroHome() {
   const { hero } = site;
-  const words = hero.title.split(" ");
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section className="hero">
-      <div className="container hero__inner">
-        <motion.p className="hero__kicker" {...up(0.25)}>{site.fullName}</motion.p>
+    <section className="hero" ref={ref}>
+      {/* background: slow zoom on load, drifts down while scrolling */}
+      <motion.div className="hero__bg" style={{ y: bgY }} aria-hidden="true">
+        <motion.img src="/images/hero-bg.jpg" alt="" initial={{ scale: 1.15, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 2.2, ease }} />
+      </motion.div>
 
-        {/* title: each word rises from behind a mask */}
-        <motion.h1 className="hero__title" aria-label={hero.title}
-          initial="hidden" animate="show"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: 0.4 } } }}>
-          {words.map((w, i) => (
-            <span className="mask" key={i} aria-hidden="true">
-              <motion.span className="mask__inner"
-                variants={{ hidden: { y: "110%", rotate: 4 }, show: { y: "0%", rotate: 0, transition: { duration: 1, ease } } }}>
-                {w}
-              </motion.span>
-              {i < words.length - 1 ? "\u00A0" : ""}
-            </span>
-          ))}
-        </motion.h1>
+      <motion.div className="container hero__inner" style={{ y: contentY, opacity: fade }}>
+        <ImageHeading as="h1" onLoad src="/images/brands.png" alt={hero.title} width={1374} height={341}
+          className="hero__brands" delay={0.3} />
+        <motion.div className="hero__tagline" aria-hidden="true"
+          initial={{ opacity: 0, scaleX: 1.35, filter: "blur(6px)" }}
+          animate={{ opacity: 1, scaleX: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.4, delay: 0.75, ease }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/made-to-stand-out.png" alt="" width={764} height={97} />
+        </motion.div>
 
-        <motion.p className="hero__lead" {...up(0.8)}>
-          {hero.text.before}
-          <span className="accent accent--draw">{hero.text.highlight}</span>
-          {hero.text.after}
+        <motion.p className="hero__lead" {...up(1.05)}>
+          {hero.lead.before}<strong className="accent">{hero.lead.highlight}</strong>{hero.lead.after}
         </motion.p>
+        <motion.p className="hero__lead hero__lead--2" {...up(1.15)}>{hero.lead2}</motion.p>
 
-        {/* service tags pop in one by one */}
-        <p className="hero__tags" aria-label={hero.tags.join(", ")}>
-          {hero.tags.map((t, i) => (
-            <motion.span key={t} aria-hidden="true" className="hero__tag"
-              initial={{ opacity: 0, y: 12, scale: 0.8 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 18, delay: 1 + i * 0.08 }}>
-              {t}{i < hero.tags.length - 1 && <span className="hero__dot">·</span>}
-            </motion.span>
-          ))}
-        </p>
-      </div>
-
-      <motion.div {...up(1.2)}><LogoTicker clients={site.clients} /></motion.div>
-
-      <motion.div className="hero__actions" {...up(1.35)}>
-        <Magnetic><Link href="/work" className="btn btn--orange">Explore Our Work</Link></Magnetic>
-        <Magnetic><Link href="/services" className="btn btn--outline">Explore Our Services</Link></Magnetic>
+        <motion.div className="hero__actions" {...up(1.3)}>
+          <Magnetic><Link href="/work" className="btn btn--green btn--lg">{hero.button} <span aria-hidden="true">➔</span></Link></Magnetic>
+        </motion.div>
       </motion.div>
     </section>
   );

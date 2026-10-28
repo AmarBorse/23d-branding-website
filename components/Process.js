@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1];
 
-// Cards rise in one after another; an orange line draws across the top of each.
+// Cards rise in one after another; a green line draws across the top of each.
 export default function Process({ steps }) {
   return (
     <ol className="process">

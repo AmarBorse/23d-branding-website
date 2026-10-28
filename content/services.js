@@ -1,13 +1,20 @@
+// The five services. `image` is shown in the "What we do" grid on the home page
+// and on the Services page. Images are in /public/images.
 export const services = [
-  { title: "Brand Identity", text: "Creating distinctive identities that people remember.",
+  { title: "Brand Identity Design", image: "/images/service-brand-identity.jpg",
+    text: "Creating distinctive identities that people remember.",
     tags: ["Strategy", "Logo", "Visual Identity", "Guidelines"] },
-  { title: "Web Design & Development", text: "Websites that look good, work smoothly and represent your brand.",
+  { title: "Web Design & Development", image: "/images/service-web.jpg",
+    text: "Websites that look good, work smoothly and represent your brand.",
     tags: ["UI/UX", "Website Design", "Development", "Landing Pages"] },
-  { title: "Social Media", text: "Turning your social presence into a consistent brand experience.",
+  { title: "Social Media Marketing", image: "/images/service-social.jpg",
+    text: "Turning your social presence into a consistent brand experience.",
     tags: ["Strategy", "Content", "Design", "Reels", "Management"] },
-  { title: "Packaging & CGI", text: "Making products look as good on screen as they do in hand.",
-    tags: ["Packaging", "Product Visuals", "CGI Ads", "3D"] },
-  { title: "Brochure & Collateral", text: "Information designed to communicate, not just fill pages.",
+  { title: "Packaging Design", image: "/images/service-packaging.jpg",
+    text: "Making products look as good on screen as they do in hand.",
+    tags: ["Packaging", "Product Visuals", "CGI", "3D"] },
+  { title: "Brochure Designing", image: "/images/service-brochure.jpg",
+    text: "Information designed to communicate, not just fill pages.",
     tags: ["Brochures", "Profiles", "Presentations", "Flyers", "Catalogues"] },
 ];
 

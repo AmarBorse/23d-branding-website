@@ -4,7 +4,7 @@
   background: transparent; color: var(--ink); border: 0;
   transition: background .3s, color .3s, transform .4s cubic-bezier(.22,1,.36,1);
 }
-.toggle:hover { background: color-mix(in srgb, var(--orange) 12%, transparent); color: var(--orange); }
+.toggle:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
 .toggle:active { transform: scale(.9); }
 .icon {
   position: absolute; width: 20px; height: 20px;
@@ -13,10 +13,10 @@
 }
 .moon { fill: currentColor; stroke: none; }
 
-/* day mode: show moon */
-.sun  { opacity: 0; transform: rotate(-90deg) scale(.4); }
-.moon { opacity: 1; transform: rotate(0) scale(1); }
+/* day mode: show sun (as in the design) */
+.sun  { opacity: 1; transform: rotate(0) scale(1); }
+.moon { opacity: 0; transform: rotate(90deg) scale(.4); }
 
-/* night mode: show sun */
-:global(:root[data-theme="dark"]) .sun  { opacity: 1; transform: rotate(0) scale(1); }
-:global(:root[data-theme="dark"]) .moon { opacity: 0; transform: rotate(90deg) scale(.4); }
+/* night mode: show moon */
+:global(:root[data-theme="dark"]) .sun  { opacity: 0; transform: rotate(-90deg) scale(.4); }
+:global(:root[data-theme="dark"]) .moon { opacity: 1; transform: rotate(0) scale(1); }

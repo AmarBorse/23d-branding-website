@@ -1,7 +1,7 @@
 "use client";
 import { motion, useScroll, useSpring } from "framer-motion";
 
-// Thin orange line at the top that fills as you scroll down the page.
+// Thin green line at the top that fills as you scroll down the page.
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 25, restDelta: 0.001 });

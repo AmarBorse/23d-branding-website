@@ -1,52 +1,72 @@
-import Link from "next/link";
 import { site } from "@/content/site";
 import { projects } from "@/content/projects";
-import { services, process } from "@/content/services";
+import { services } from "@/content/services";
 import HeroHome from "@/components/HeroHome";
-import Masonry from "@/components/Masonry";
-import ServiceRows from "@/components/ServiceRows";
-import ScrollWords from "@/components/ScrollWords";
-import Process from "@/components/Process";
+import ImageHeading from "@/components/ImageHeading";
 import FadeIn from "@/components/FadeIn";
-import AboutBlock from "@/components/AboutBlock";
+import ServiceGallery from "@/components/ServiceGallery";
+import WorkShowcase from "@/components/WorkShowcase";
+import ClientGrid from "@/components/ClientGrid";
+import CtaSpotlight from "@/components/CtaSpotlight";
 
 export default function Home() {
   return (
     <>
       <HeroHome />
 
-      <section className="container section--work">
-        <Masonry projects={projects.slice(0, 6)} />
-        <FadeIn className="center"><Link href="/work" className="btn btn--outline">View All Work</Link></FadeIn>
+      {/* ── Our approach (white) ── */}
+      <section className="approach">
+        <FadeIn className="approach__art" y={20}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/illustration-approach.png" alt="" width={442} height={251} loading="lazy" />
+        </FadeIn>
+        <div className="container approach__inner">
+          <ImageHeading src="/images/our-approach.png" alt={site.approach.title} width={1993} height={321} className="approach__title" />
+          <FadeIn className="approach__text" delay={0.15}>
+            <p>{site.approach.text}</p>
+            <p>{site.approach.text2}</p>
+          </FadeIn>
+          <FadeIn className="rule rule--right" delay={0.3} />
+        </div>
       </section>
 
-      <section className="section container intro">
-        <FadeIn as="h2" className="sec-title">{site.intro.title}</FadeIn>
-        <FadeIn as="p" className="lead" delay={0.1}>{site.intro.text}</FadeIn>
+      {/* ── What we do (black) ── */}
+      <section className="dark wwd">
+        <div className="container">
+          <div className="wwd__head">
+            <div>
+              <ImageHeading src="/images/what-we-do.png" alt="What we do" width={1515} height={218} className="wwd__title" />
+              <FadeIn className="rule rule--light" delay={0.2} />
+            </div>
+            <FadeIn className="wwd__art" delay={0.2}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/illustration-puzzle.png" alt="" width={442} height={278} loading="lazy" />
+            </FadeIn>
+          </div>
+          <ServiceGallery services={services} />
+        </div>
       </section>
 
-      <section className="section container">
-        <FadeIn as="h2" className="sec-title">What we do</FadeIn>
-        <ServiceRows services={services} />
+      {/* ── Our Work (white) ── */}
+      <section className="ourwork">
+        <div className="container">
+          <ImageHeading src="/images/our-work.png" alt="Our Work" width={1208} height={216} className="ourwork__title" />
+          <WorkShowcase projects={projects.slice(0, 3)} />
+        </div>
       </section>
 
-      <section className="section container statement">
-        <ScrollWords text={site.statement.title} className="statement__title" />
-        <FadeIn as="p" className="lead">{site.statement.text}</FadeIn>
+      {/* ── Our clients (black + smoke) ── */}
+      <section className="dark clients">
+        <div className="clients__bg" aria-hidden="true" />
+        <div className="container clients__inner">
+          <ImageHeading src="/images/our-clients.png" alt="Our clients" width={1107} height={190} className="clients__title" />
+          <FadeIn as="p" className="clients__tag" delay={0.2}>{site.clientsTagline}</FadeIn>
+          <FadeIn className="rule rule--light clients__rule" delay={0.3} />
+          <ClientGrid clients={site.clients} />
+        </div>
       </section>
 
-      <section className="section container"><AboutBlock /></section>
-
-      <section className="section container">
-        <FadeIn as="h2" className="sec-title">How we work</FadeIn>
-        <Process steps={process} />
-      </section>
-
-      <section className="section container cta">
-        <FadeIn as="h2" className="sec-title">{site.cta.ask}</FadeIn>
-        <FadeIn as="p" className="lead" delay={0.1}>{site.cta.line}</FadeIn>
-        <FadeIn delay={0.2}><Link href="/contact" className="btn btn--orange">Start a Project</Link></FadeIn>
-      </section>
+      <CtaSpotlight />
     </>
   );
 }

@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1];
 // Project photo card:
 // - unveils bottom-to-top when scrolled into view
 // - drifts with a soft parallax while scrolling
-// - on hover: zooms, swaps to a second image, and a "View" badge follows the mouse
+// - on hover: zooms, swaps to the first gallery image (if there is one), and a "View" badge follows the mouse
 export default function ProjectCard({ project, ratio = "wide", index = 0 }) {
   const ref = useRef(null);
   const mediaRef = useRef(null);
@@ -43,7 +43,7 @@ export default function ProjectCard({ project, ratio = "wide", index = 0 }) {
         >
           <motion.div className="pcard__parallax" style={{ y }}>
             <div className="pcard__img"><Cover project={project} /></div>
-            <div className="pcard__img pcard__img--alt" aria-hidden="true"><Cover project={project} variant={1} /></div>
+            {project.gallery?.[0] && <div className="pcard__img pcard__img--alt" aria-hidden="true"><Cover project={project} variant={1} /></div>}
           </motion.div>
 
           <AnimatePresence>

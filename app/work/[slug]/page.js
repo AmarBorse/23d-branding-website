@@ -15,35 +15,42 @@ export default function CaseStudy({ params }) {
   if (!project) notFound();
   const idx = projects.findIndex((p) => p.slug === project.slug);
   const next = projects[(idx + 1) % projects.length];
+  const gallery = project.gallery || [];
 
   return (
     <article>
-      <section className="page-hero container">
-        <FadeIn as="p" className="crumb"><Link href="/work">Work</Link> / {project.category}</FadeIn>
-        <FadeIn as="h1" className="page-title" delay={0.05}>{project.title}</FadeIn>
-        <FadeIn as="p" className="lead" delay={0.1}>{project.summary}</FadeIn>
+      <section className="page-hero">
+        <div className="container">
+          <FadeIn as="p" className="crumb"><Link href="/work">Work</Link> / {project.category}</FadeIn>
+          <FadeIn as="h1" className="page-title" delay={0.05}>{project.title}</FadeIn>
+          <FadeIn as="p" className="lead" delay={0.1}>{project.summary}</FadeIn>
+        </div>
       </section>
 
-      <section className="container"><CaseCover project={project} className="case-cover--hero" /></section>
-
-      <section className="container facts-wrap">
+      <section className="container case">
+        <CaseCover project={project} className="case-cover--hero" />
         <dl className="facts">
           <div><dt>Client</dt><dd>{project.client}</dd></div>
-          <div><dt>Year</dt><dd>{project.year}</dd></div>
+          {project.year && <div><dt>Year</dt><dd>{project.year}</dd></div>}
           <div><dt>Services</dt><dd>{project.services.join(", ")}</dd></div>
         </dl>
       </section>
 
-      <section className="container gallery">
-        <CaseCover project={project} variant={1} />
-        <CaseCover project={project} variant={2} />
-        <CaseCover project={project} variant={3} className="gallery__wide" />
-      </section>
+      {gallery.length > 0 && (
+        <section className="container gallery">
+          {gallery.map((src, i) => (
+            <CaseCover key={src} project={project} variant={i + 1}
+              className={gallery.length % 2 === 1 && i === gallery.length - 1 ? "gallery__wide" : ""} />
+          ))}
+        </section>
+      )}
 
-      <section className="container next">
-        <p>Next project</p>
-        <Link href={`/work/${next.slug}`} className="next__link">{next.title}</Link>
-      </section>
+      {projects.length > 1 && (
+        <section className="container next">
+          <p>Next project</p>
+          <Link href={`/work/${next.slug}`} className="next__link">{next.title}</Link>
+        </section>
+      )}
     </article>
   );
 }
