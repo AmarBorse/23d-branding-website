@@ -51,7 +51,7 @@ export default function Home() {
       <section className="ourwork">
         <div className="container">
           <ImageHeading src="/images/our-work.png" alt="Our Work" width={1208} height={216} className="ourwork__title" />
-          <WorkShowcase projects={projects.slice(0, 3)} />
+          <WorkShowcase projects={projects} />
         </div>
       </section>
 

@@ -172,7 +172,7 @@ strong { font-weight: 700; }
 .stile__link:hover .stile__arrow { opacity: 1; transform: none; }
 
 /* ─────────────── Our Work ─────────────── */
-.ourwork { background: var(--bg); padding: clamp(2rem, 3.8vw, 3rem) 0 clamp(2.4rem, 4vw, 3rem); }
+.ourwork { overflow: hidden; background: var(--bg); padding: clamp(2.4rem, 4.5vw, 3.5rem) 0 clamp(2.4rem, 4vw, 3rem); }
 .ourwork__title { width: 45.6%; margin-left: auto; }
 .wshow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.2%; margin-top: clamp(.8rem, 1.6vw, 1.3rem); }
 .wshow__link { position: relative; display: block; overflow: hidden; aspect-ratio: 276 / 366; background: var(--placeholder); }
@@ -187,6 +187,33 @@ strong { font-weight: 700; }
 .wshow__label span:last-child { color: var(--accent); }
 .wshow__link:hover .wshow__label, .wshow__link:focus-visible .wshow__label { opacity: 1; transform: none; }
 @media (hover: none) { .wshow__label { opacity: 1; transform: none; } }
+
+/* Our Work: curved 5-panel gallery (white background) */
+.cflow { --cw: clamp(210px, 22vw, 300px); position: relative; margin-top: clamp(1rem, 2.5vw, 2rem); outline: none; }
+.cflow:focus-visible .cflow__stage { outline: 2px solid var(--accent); outline-offset: 8px; border-radius: 8px; }
+.cflow__stage { position: relative; height: calc(var(--cw) * 1.326 + 2.5rem); perspective: 1100px; perspective-origin: 50% 30%; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.cflow__stage:active { cursor: grabbing; }
+.cflow__tilt { position: absolute; inset: 0; transform-style: preserve-3d; }
+.cflow__card { position: absolute; bottom: 2.5rem; left: 50%; width: var(--cw); margin-left: calc(var(--cw) / -2); aspect-ratio: 276 / 366; transform-origin: 50% 100%; will-change: transform; }
+.cflow__tiltcard { width: 100%; height: 100%; will-change: transform; }
+.cflow__link { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 2px; background: var(--placeholder); box-shadow: 0 34px 50px -30px rgba(0,0,0,.45); }
+.cflow__link img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.cflow__shade { position: absolute; inset: 0; background: #000; pointer-events: none; }
+
+.cflow__meta { position: relative; z-index: 20; display: flex; align-items: center; justify-content: center; gap: clamp(.8rem, 2.4vw, 1.6rem); }
+.cflow__btn { width: 46px; height: 46px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); transition: background .3s, color .3s, box-shadow .3s, transform .35s var(--ease); }
+.cflow__btn:hover { background: var(--accent); color: #fff; box-shadow: none; transform: scale(1.06); }
+.cflow__dots { display: flex; gap: .45rem; }
+.cflow__dot { width: 8px; height: 8px; border-radius: 999px; background: var(--line); transition: width .45s var(--ease), background .3s; }
+.cflow__dot:hover { background: var(--grey); }
+.cflow__dot.is-active { width: 28px; background: var(--accent); }
+.cflow__open { font-size: .92rem; font-weight: 600; color: var(--ink); padding: .55rem 1.1rem; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--ink); transition: background .3s, color .3s, box-shadow .3s; }
+.cflow__open:hover { background: var(--accent); color: #fff; box-shadow: none; }
+@media (max-width: 640px) {
+  .cflow { --cw: 50vw; }
+  .cflow__open { display: none; }
+  .cflow__btn { width: 42px; height: 42px; }
+}
 
 /* ─────────────── Our clients ─────────────── */
 .clients { position: relative; overflow: hidden; isolation: isolate; padding: clamp(1.2rem, 2.4vw, 2rem) 0 clamp(2.6rem, 4.5vw, 3.6rem); }
@@ -320,7 +347,7 @@ strong { font-weight: 700; }
 .acc__body { overflow: hidden; }
 .acc__content { padding-bottom: 1.75rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 .acc__content p { font-size: 1.05rem; color: var(--grey); max-width: 40ch; }
-.tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .45rem; align-content: start; }
+.tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .45rem; align-content: flex-start; }
 .tags li { padding: .4rem .9rem; border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: .9rem; }
 
 .case { padding-top: clamp(2.5rem, 5vw, 4rem); }
