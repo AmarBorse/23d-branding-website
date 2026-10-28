@@ -1,20 +1,15 @@
 "use client";
 import Link from "next/link";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useTransform, useScroll, useVelocity, useSpring, useAnimationFrame } from "framer-motion";
 import { site } from "@/content/site";
 
 export default function Footer() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
-  // the giant "BRANDING 23D" words slide towards each other as the footer comes into view
-  const leftX = useTransform(scrollYProgress, [0, 1], ["-6%", "0%"]);
-  const rightX = useTransform(scrollYProgress, [0, 1], ["10%", "0%"]);
   const chat = site.whatsapp || "/contact";
   const chatExternal = chat.startsWith("http");
 
   return (
-    <footer className="footer" ref={ref}>
+    <footer className="footer">
       <div className="footer__wrap">
         <div className="footer__top">
           <div className="footer__brand">
@@ -50,11 +45,47 @@ export default function Footer() {
         <div className="footer__rule" />
       </div>
 
-      <div className="footer__giant" aria-hidden="true">
-        <motion.img src="/images/footer-branding.png" alt="" className="footer__giant-l" style={{ x: leftX }} loading="lazy" />
-        <motion.img src="/images/footer-23d.png" alt="" className="footer__giant-r" style={{ x: rightX }} loading="lazy" />
-      </div>
+      <Marquee />
       <p className="footer__credit">{site.footer.credit}</p>
     </footer>
+  );
+}
+
+const wrap = (min, max, v) => { const r = max - min; return ((((v - min) % r) + r) % r) + min; };
+
+// Giant "BRANDING 23D" sliding endlessly. Speeds up while you scroll, slows down on hover.
+function Marquee({ speed = 2.2 }) {
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const velocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
+  const boost = useTransform(velocity, [-1500, 0, 1500], [5, 0, 5], { clamp: false });
+  const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`);
+  const hover = useRef(false);
+  const rate = useRef(1);
+  const [still, setStill] = useState(false);
+  useEffect(() => setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches), []);
+
+  useAnimationFrame((_, delta) => {
+    if (still) return;
+    rate.current += ((hover.current ? 0.25 : 1) - rate.current) * 0.06;
+    baseX.set(baseX.get() - speed * (delta / 1000) * rate.current * (1 + Math.abs(boost.get())));
+  });
+
+  const set = (
+    <div className="marquee__set">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/images/footer-branding.png" alt="" className="marquee__word" loading="lazy" draggable="false" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/images/footer-23d.png" alt="" className="marquee__word" loading="lazy" draggable="false" />
+    </div>
+  );
+
+  return (
+    <div className="footer__giant marquee" aria-hidden="true"
+      onMouseEnter={() => (hover.current = true)} onMouseLeave={() => (hover.current = false)}>
+      <motion.div className="marquee__track" style={{ x: still ? 0 : x }}>
+        {set}{set}
+      </motion.div>
+    </div>
   );
 }

@@ -258,10 +258,11 @@ strong { font-weight: 700; }
 .footer__chat { width: 46px; height: 46px; margin-right: 1.1rem; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; transition: transform .4s var(--ease), background .3s; }
 .footer__chat:hover { transform: scale(1.1) rotate(-6deg); background: var(--accent-hover); }
 .footer__rule { height: 1px; background: rgba(255, 255, 255, .75); margin-top: clamp(1.6rem, 3vw, 2.2rem); }
-.footer__giant { position: relative; height: 13vw; margin-top: 1.5vw; pointer-events: none; }
-.footer__giant img { position: absolute; top: 0; height: auto; opacity: .33; }
-.footer__giant-l { left: -2.6vw; width: 67.9vw; max-width: none; }
-.footer__giant-r { left: 70.8vw; width: 27.6vw; max-width: none; }
+.footer__giant { position: relative; overflow: hidden; margin-top: 1.5vw; padding-bottom: 1.6rem; }
+.marquee__track { display: flex; width: max-content; will-change: transform; }
+.marquee__set { display: flex; align-items: flex-end; flex-shrink: 0; }
+.marquee__word { height: 11.6vw; width: auto; max-width: none; margin-right: 4.5vw; opacity: .33; user-select: none; transition: opacity .4s; }
+.marquee:hover .marquee__word { opacity: .5; }
 .footer__credit { position: absolute; right: 4%; bottom: .7rem; font-size: .66rem; letter-spacing: .08em; color: #fff; }
 
 /* ─────────────── Services page ─────────────── */
@@ -510,7 +511,7 @@ strong { font-weight: 700; }
   .masonry { grid-template-columns: 1fr; }
   .masonry__col:last-child { margin-top: 0; }
   .process, .facts, .cform__row, .acc__content, .gallery { grid-template-columns: 1fr; }
-  .footer__giant { height: 15vw; }
+  .marquee__word { height: 14vw; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
