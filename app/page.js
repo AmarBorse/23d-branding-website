@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { projects } from "@/content/projects";
+import { getShowcaseItems } from "@/lib/showcase";
 import { services } from "@/content/services";
 import HeroHome from "@/components/HeroHome";
 import ImageHeading from "@/components/ImageHeading";
@@ -47,7 +47,7 @@ export default function Home() {
       <section className="ourwork">
         <div className="container">
           <ImageHeading src="/images/our-work.png" alt="Our Work" width={1208} height={216} className="ourwork__title" />
-          <WorkShowcase projects={projects} />
+          <WorkShowcase projects={getShowcaseItems()} />
         </div>
       </section>
 

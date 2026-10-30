@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from "fram
 import { site } from "@/content/site";
 import ImageHeading from "./ImageHeading";
 import Magnetic from "./Magnetic";
+import FluidBg from "./FluidBg";
 
 const ease = [0.22, 1, 0.36, 1];
 const up = (delay) => ({
@@ -45,6 +46,8 @@ export default function HeroHome() {
               transition={{ duration: 2.2, ease }} />
           </div>
         </motion.div>
+        {/* live flowing smoke on top of the photo */}
+        <FluidBg className="hero__fluid" />
       </motion.div>
 
       <motion.div className="container hero__inner" style={{ y: contentY, opacity: fade }}>

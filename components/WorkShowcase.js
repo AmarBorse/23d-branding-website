@@ -36,8 +36,8 @@ function TiltCard({ children, disabled }) {
     </motion.div>
   );
 }
-export default function WorkShowcase({ projects: all, autoplay = 4500 }) {
-  const projects = all.filter((p) => p.featured !== false); // featured: false hides a project from the home slider
+// `projects` = list from lib/showcase.js: { id, title, image, href, external }
+export default function WorkShowcase({ projects, autoplay = 4500 }) {
   const n = projects.length;
   // repeat the projects so there are always enough panels for both sides
   const ring = useMemo(() => {
@@ -137,7 +137,7 @@ export default function WorkShowcase({ projects: all, autoplay = 4500 }) {
             const shown = a <= maxSide;
             return (
               <motion.div
-                key={p._k}
+                key={`${p.id}-${p._k}`}
                 className={`cflow__card ${isActive ? "is-active" : ""}`}
                 style={{ zIndex: 10 - a, pointerEvents: shown ? "auto" : "none" }}
                 initial={false}
@@ -147,7 +147,8 @@ export default function WorkShowcase({ projects: all, autoplay = 4500 }) {
               >
                 <TiltCard disabled={reduce || !shown}>
                 <Link
-                  href={`/work/${p.slug}`}
+                  href={p.href}
+                  {...(p.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="cflow__link"
                   tabIndex={isActive ? 0 : -1}
                   draggable={false}
@@ -157,7 +158,10 @@ export default function WorkShowcase({ projects: all, autoplay = 4500 }) {
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.cover} alt={`${p.title} brand identity`} loading="lazy" draggable={false} />
+                  {p.fit === "contain" && <img src={p.image} alt="" aria-hidden="true" className="cflow__backdrop" loading="lazy" draggable={false} />}
+                  <img src={p.image} alt={`${p.title} by 23D Branding`} loading="lazy" draggable={false}
+                    className={p.fit === "contain" ? "cflow__img--contain" : undefined}
+                    style={p.position ? { objectPosition: p.position } : undefined} />
                   <motion.span className="cflow__shade" aria-hidden="true"
                     initial={false} animate={{ opacity: [0, 0.12, 0.25][Math.min(a, 2)] }} transition={{ duration: 0.6 }} />
                 </Link>
@@ -174,12 +178,12 @@ export default function WorkShowcase({ projects: all, autoplay = 4500 }) {
         </button>
         <div className="cflow__dots">
           {projects.map((p, i) => (
-            <button key={p.slug} type="button" className={`cflow__dot ${i === realIndex ? "is-active" : ""}`}
+            <button key={p.id} type="button" className={`cflow__dot ${i === realIndex ? "is-active" : ""}`}
               onClick={() => setActive(Math.floor(active / n) * n + i)}
               aria-label={`Show ${p.title}`} aria-current={i === realIndex ? "true" : undefined} />
           ))}
         </div>
-        <Link href={`/work/${current.slug}`} className="cflow__open">View project <span aria-hidden="true">➔</span></Link>
+        <Link href={current.href} className="cflow__open" {...(current.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{current.external ? "Visit website" : "View project"} <span aria-hidden="true">{current.external ? "↗" : "➔"}</span></Link>
         <button type="button" className="cflow__btn" onClick={() => go(1)} aria-label="Next project">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
