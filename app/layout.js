@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
+import Preloader from "@/components/Preloader";
+import Cursor from "@/components/Cursor";
 
 export const metadata = {
   title: { default: `${site.fullName} | Brands made to stand out`, template: `%s | ${site.fullName}` },
@@ -31,6 +33,8 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <a href="#main" className="skip">Skip to content</a>
+        <Preloader />
+        <Cursor />
         <SmoothScroll>
           <ScrollProgress />
           <Header />

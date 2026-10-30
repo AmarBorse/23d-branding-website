@@ -15,7 +15,12 @@ export default function ServiceList({ services, defaultOpen = [0] }) {
     const i = services.findIndex((s) => s.id === id);
     if (i < 0) return;
     setOpen(new Set([i]));
-    setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 350);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -90 });
+      else el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 450);
   }, [services]);
 
   const toggle = (i) => setOpen((prev) => {
