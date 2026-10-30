@@ -25,6 +25,15 @@
   transition: color .25s, text-decoration-color .25s;
 }
 .link:hover, .active { color: var(--accent); }
+/* text rolls up on hover, a copy rolls in from below */
+.link { text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+.roll { position: relative; display: inline-block; overflow: hidden; vertical-align: top; line-height: 1.25; }
+.roll > span, .roll::after { display: block; transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.roll::after { content: attr(data-text); position: absolute; left: 0; top: 100%; }
+.link:hover .roll > span, .link:hover .roll::after { transform: translateY(-100%); }
+/* scrolling down hides the floating menu; scrolling up brings it back */
+.inner { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.hidden .inner { transform: translateY(-160%); }
 .divider { width: 1px; height: 38px; background: rgba(255,255,255,.85); margin: 0 -.6rem 0 0; transition: height .45s; }
 .nav .toggle { color: #fff; }
 .nav .toggle:hover { color: var(--accent); background: rgba(255,255,255,.08); }

@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 const ease = [0.22, 1, 0.36, 1];
 
 // Fades content up into view.
-// Headings (h1, h2, h3) with plain text get a word-by-word "slide up from a mask" reveal instead.
+// Headings (h1, h2, h3) with plain text get a word-by-word "slide up from a mask" reveal instead,
+// and plain-text paragraphs get a soft word-by-word blur-in.
 export default function FadeIn({ children, delay = 0, y = 30, className = "", as = "div" }) {
   const Tag = motion[as];
 
@@ -29,6 +30,24 @@ export default function FadeIn({ children, delay = 0, y = 30, className = "", as
             </motion.span>
             {i < words.length - 1 ? "\u00A0" : ""}
           </span>
+        ))}
+      </Tag>
+    );
+  }
+
+  // Paragraphs with plain text: words drift up out of a soft blur, one after another.
+  if (as === "p" && typeof children === "string") {
+    const words = children.split(" ");
+    const step = Math.min(0.03, 0.9 / words.length); // long text still finishes in about a second
+    return (
+      <Tag className={className} aria-label={children} initial="hidden" whileInView="show"
+        viewport={{ once: true, amount: 0.4 }}
+        variants={{ hidden: {}, show: { transition: { staggerChildren: step, delayChildren: delay } } }}>
+        {words.map((w, i) => (
+          <motion.span key={i} aria-hidden="true" style={{ display: "inline-block", whiteSpace: "pre" }}
+            variants={{ hidden: { opacity: 0, y: "0.45em", filter: "blur(6px)" }, show: { opacity: 1, y: "0em", filter: "blur(0px)", transition: { duration: 0.6, ease } } }}>
+            {w}{i < words.length - 1 ? " " : ""}
+          </motion.span>
         ))}
       </Tag>
     );

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, useScroll, useVelocity, useSpring, useAnimationFrame } from "framer-motion";
 import { site } from "@/content/site";
 
+const rise = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } } };
+
 export default function Footer() {
   const chat = site.whatsapp || "/contact";
   const chatExternal = chat.startsWith("http");
@@ -11,8 +13,9 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__wrap">
-        <div className="footer__top">
-          <div className="footer__brand">
+        <motion.div className="footer__top" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}>
+          <motion.div className="footer__brand" variants={rise}>
             <Link href="/" aria-label={`${site.fullName} home`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/logo-23d.png" alt="23D Branding Solutions" width={252} height={139} className="footer__logo" />
@@ -21,17 +24,17 @@ export default function Footer() {
               {site.footer.tagline.before}<strong className="accent">{site.footer.tagline.highlight}</strong>
             </p>
             <p className="footer__copy">© {new Date().getFullYear()} {site.fullName}. All Rights Reserved.</p>
-          </div>
+          </motion.div>
 
-          <nav className="footer__col" aria-label="Footer">
+          <motion.nav className="footer__col" aria-label="Footer" variants={rise}>
             {site.footerNav.map((n) => <Link key={n.href} href={n.href}>{n.label}</Link>)}
-          </nav>
+          </motion.nav>
 
-          <div className="footer__col">
+          <motion.div className="footer__col" variants={rise}>
             {site.socials.map((s) => <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.label}</a>)}
-          </div>
+          </motion.div>
 
-          <div className="footer__actions">
+          <motion.div className="footer__actions" variants={rise}>
             <Link href="/contact" className="btn btn--white-green">{site.footer.bookCall} <span aria-hidden="true">➔</span></Link>
             <a href={chat} className="footer__chat" aria-label="Chat with us"
               {...(chatExternal ? { target: "_blank", rel: "noreferrer" } : {})}>
@@ -40,8 +43,8 @@ export default function Footer() {
                 <path fill="currentColor" d="M17.5 8H18a2.5 2.5 0 0 1 2.5 2.5v5A2.5 2.5 0 0 1 18 18h-.5v2.6L14.3 18H10a2.5 2.5 0 0 1-2.3-1.5h6.1a3.7 3.7 0 0 0 3.7-3.7V8Z" />
               </svg>
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         <div className="footer__rule" />
       </div>
 

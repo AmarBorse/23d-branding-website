@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 // Soft green cursor ring that trails the mouse (desktop only).
-// Grows over links and buttons; becomes a "View" bubble over project and service images.
+// Grows over links and buttons; hides over project and service images (they show their own centred arrow).
 const VIEW = ".cflow__link, .stile__link, .wshow__link, .svc__img, .wcard__btn, [data-cursor='view']";
 
 export default function Cursor() {
@@ -38,18 +38,18 @@ export default function Cursor() {
   }, [x, y]);
 
   if (!enabled) return null;
-  const size = mode === "view" ? 86 : mode === "link" ? 54 : 30;
+  const size = mode === "view" ? 46 : mode === "link" ? 54 : 30;
 
   return (
     <>
       <motion.div className={`cursor cursor--${mode}`} aria-hidden="true"
         style={{ x: rx, y: ry }}
-        animate={{ width: size, height: size, opacity: visible ? 1 : 0 }}
+        animate={{ width: size, height: size, opacity: visible && mode !== "view" ? 1 : 0 }}
         transition={{ type: "spring", stiffness: 350, damping: 28 }}>
         <AnimatePresence>
           {mode === "view" && (
-            <motion.span className="cursor__label" initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.6 }}>
-              View
+            <motion.span className="cursor__label" initial={{ opacity: 0, scale: 0.4, rotate: -45 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: 0.4 }}>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </motion.span>
           )}
         </AnimatePresence>

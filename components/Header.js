@@ -13,11 +13,18 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [floating, setFloating] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setFloating(window.scrollY > 80);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setFloating(y > 80);
+      // slide the menu away when scrolling down, bring it back when scrolling up
+      if (Math.abs(y - last) > 6) { setHidden(y > last && y > 400); last = y; }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -35,7 +42,7 @@ export default function Header() {
   return (
     <>
       <motion.header
-        className={`${s.header} ${floating && !open ? s.floating : ""}`}
+        className={`${s.header} ${floating && !open ? s.floating : ""} ${hidden && !open ? s.hidden : ""}`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.1 }}
@@ -54,7 +61,7 @@ export default function Header() {
                 className={`${s.link} ${isActive(item.href) ? s.active : ""}`}
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
-                {item.label}
+                <span className={s.roll} data-text={item.label}><span>{item.label}</span></span>
               </Link>
             ))}
             <span className={s.divider} aria-hidden="true" />
