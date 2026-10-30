@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1];
@@ -57,14 +58,28 @@ export default function WorkTabs({ categories }) {
                   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
                   exit: { opacity: 0, y: -20, transition: { duration: 0.25 } },
                 }}>
-                <button type="button" className="wcard__btn" onClick={() => setZoom(it)} aria-label={`View ${it.title} larger`}>
-                  <motion.span className="wcard__media" style={{ aspectRatio: cat.ratio }}
-                    variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 0.9, ease } } }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={it.image} alt={`${it.title}, ${cat.label} by 23D Branding`} loading="lazy" style={it.position ? { objectPosition: it.position } : undefined} />
-                  </motion.span>
-                </button>
-                <p className="wcard__title">{it.title}</p>
+                {(() => {
+                  const media = (
+                    <motion.span className="wcard__media" style={{ aspectRatio: cat.ratio }}
+                      variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 0.9, ease } } }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={it.image} alt={`${it.title}, ${cat.label} by 23D Branding`} loading="lazy" style={it.position ? { objectPosition: it.position } : undefined} />
+                      {it.slug && <span className="wcard__badge">View project ➔</span>}
+                      {!it.slug && it.url && <span className="wcard__badge">Visit website ↗</span>}
+                    </motion.span>
+                  );
+                  if (it.slug) return <Link href={`/work/${it.slug}`} className="wcard__btn wcard__btn--link">{media}</Link>;
+                  if (it.url) return (
+                    <a href={it.url} target="_blank" rel="noopener noreferrer" className="wcard__btn wcard__btn--link"
+                      aria-label={`Visit the ${it.title} website (opens in a new tab)`}>{media}</a>
+                  );
+                  return <button type="button" className="wcard__btn" onClick={() => setZoom(it)} aria-label={`View ${it.title} larger`}>{media}</button>;
+                })()}
+                <p className="wcard__title">
+                  {it.url && !it.slug
+                    ? <a href={it.url} target="_blank" rel="noopener noreferrer" className="wcard__ext">{it.title} <span aria-hidden="true">↗</span></a>
+                    : it.title}
+                </p>
               </motion.li>
             ))}
           </motion.ul>

@@ -1,56 +1,36 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { projects, getProject } from "@/content/projects";
+import { getAllProjects, getProjectBySlug } from "@/lib/data";
 import FadeIn from "@/components/FadeIn";
-import CaseCover from "@/components/CaseCover";
+import CaseImage from "@/components/CaseImage";
+import CtaSpotlight from "@/components/CtaSpotlight";
 
-export function generateStaticParams() { return projects.map((p) => ({ slug: p.slug })); }
-export function generateMetadata({ params }) {
-  const p = getProject(params.slug);
-  return p ? { title: p.title, description: p.summary } : {};
+export async function generateStaticParams() {
+  return (await getAllProjects()).map((p) => ({ slug: p.slug }));
 }
 
-export default function CaseStudy({ params }) {
-  const project = getProject(params.slug);
+export async function generateMetadata({ params }) {
+  const p = await getProjectBySlug(params.slug);
+  return p ? { title: p.title, description: p.description, openGraph: { images: [p.hero] } } : {};
+}
+
+// Project page: title, main image, short description, then all the brand boards.
+export default async function ProjectPage({ params }) {
+  const project = await getProjectBySlug(params.slug);
   if (!project) notFound();
-  const idx = projects.findIndex((p) => p.slug === project.slug);
-  const next = projects[(idx + 1) % projects.length];
-  const gallery = project.gallery || [];
 
   return (
-    <article>
-      <section className="page-hero">
-        <div className="container">
-          <FadeIn as="p" className="crumb"><Link href="/work">Work</Link> / {project.category}</FadeIn>
-          <FadeIn as="h1" className="page-title" delay={0.05}>{project.title}</FadeIn>
-          <FadeIn as="p" className="lead" delay={0.1}>{project.summary}</FadeIn>
-        </div>
-      </section>
-
-      <section className="container case">
-        <CaseCover project={project} className="case-cover--hero" />
-        <dl className="facts">
-          <div><dt>Client</dt><dd>{project.client}</dd></div>
-          {project.year && <div><dt>Year</dt><dd>{project.year}</dd></div>}
-          <div><dt>Services</dt><dd>{project.services.join(", ")}</dd></div>
-        </dl>
-      </section>
-
-      {gallery.length > 0 && (
-        <section className="container gallery">
-          {gallery.map((src, i) => (
-            <CaseCover key={src} project={project} variant={i + 1}
-              className={gallery.length % 2 === 1 && i === gallery.length - 1 ? "gallery__wide" : ""} />
+    <>
+      <article className="case2">
+        <div className="case2__wrap">
+          <FadeIn as="h1" className="case2__title">{project.name || project.title}</FadeIn>
+          <CaseImage src={project.hero || project.cover} alt={`${project.title} by 23D Branding`} eager />
+          {project.description && <FadeIn as="p" className="case2__text" delay={0.1}>{project.description}</FadeIn>}
+          {(project.gallery || []).map((src, i) => (
+            <CaseImage key={src} src={src} alt={`${project.title}, image ${i + 1}`} />
           ))}
-        </section>
-      )}
-
-      {projects.length > 1 && (
-        <section className="container next">
-          <p>Next project</p>
-          <Link href={`/work/${next.slug}`} className="next__link">{next.title}</Link>
-        </section>
-      )}
-    </article>
+        </div>
+      </article>
+      <CtaSpotlight />
+    </>
   );
 }

@@ -36,7 +36,8 @@ function TiltCard({ children, disabled }) {
     </motion.div>
   );
 }
-export default function WorkShowcase({ projects, autoplay = 4500 }) {
+export default function WorkShowcase({ projects: all, autoplay = 4500 }) {
+  const projects = all.filter((p) => p.featured !== false); // featured: false hides a project from the home slider
   const n = projects.length;
   // repeat the projects so there are always enough panels for both sides
   const ring = useMemo(() => {

@@ -2,6 +2,9 @@
 //  "Our Work" page: projects grouped by service.
 //  Images are in /public/images/work (Aditya uses the existing home image).
 //  layout: "three" = 3 per row, "two" = 2 per row, "single" = one image
+//  slug: add the project's slug (from content/projects.js) to open its page on click;
+//        without a slug the image opens large instead.
+//  url:  a live website address; the image (and title) then open that website in a new tab.
 // ─────────────────────────────────────────────────────────────
 export const workIntro =
   "Every project starts with a different challenge. Our work reflects the process of understanding those challenges and translating them into thoughtful design solutions.";
@@ -10,7 +13,7 @@ export const workCategories = [
   {
     id: "brand-identity", label: "Brand Identity Design", layout: "three", ratio: "301 / 246",
     items: [
-      { title: "Finance & Investment firm", image: "/images/work/brand-sj-finvest.jpg" },
+      { title: "Finance & Investment firm", image: "/images/work/brand-sj-finvest.jpg", slug: "sj-finvest" },
       { title: "Architectural Firm", image: "/images/work/brand-design-atelier.jpg" },
       { title: "Construction chemical shop", image: "/images/work-aditya-enterprises.jpg", position: "50% 45%" },
     ],
@@ -18,9 +21,9 @@ export const workCategories = [
   {
     id: "web-design", label: "Web Design & Development", layout: "two", ratio: "460 / 245",
     items: [
-      { title: "Little Sukis (Clothing Brand)", image: "/images/work/web-little-sukis.jpg" },
-      { title: "Divyachetna Social Foundation (NGO)", image: "/images/work/web-divyachetna.jpg" },
-      { title: "The Design Atelier TDA (Architectural Firm)", image: "/images/work/web-design-atelier.jpg" },
+      { title: "Little Sukis (Clothing Brand)", image: "/images/work/web-little-sukis.jpg", url: "https://littlesukis.com/" },
+      { title: "Divyachetna Social Foundation (NGO)", image: "/images/work/web-divyachetna.jpg", url: "https://www.divyachetna.org.in/" },
+      { title: "The Design Atelier TDA (Architectural Firm)", image: "/images/work/web-design-atelier.jpg", url: "https://thedesignatelier.co.in/" },
     ],
   },
   {

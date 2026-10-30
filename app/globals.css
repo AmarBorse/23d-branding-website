@@ -524,6 +524,23 @@ strong { font-weight: 700; }
   .wgrid--single { width: 100%; margin-left: 0; }
 }
 
+/* ─────────────── Project page ─────────────── */
+.case2 { background: #000; color: #fff; padding: clamp(7.5rem, 14vw, 10rem) 0 clamp(3rem, 6vw, 4.5rem); }
+.case2__wrap { max-width: 1700px; margin: 0 auto; padding: 0 6.54%; }
+.case2__title { text-align: center; font-family: var(--font); font-weight: 800; font-size: clamp(1.1rem, 1.95vw, 2rem); letter-spacing: .02em; margin-bottom: clamp(1rem, 2.4vw, 2.6rem); }
+.case2__img { margin: 0 0 clamp(1.2rem, 3.8vw, 4rem); }
+.case2__img > div { overflow: hidden; }
+.case2__img img { display: block; width: 100%; height: auto; }
+.case2__text { margin: calc(clamp(1.2rem, 3.8vw, 4rem) * -0.2) 0 clamp(2rem, 5.6vw, 6rem); font-size: clamp(.98rem, 1.66vw, 1.75rem); line-height: 1.38; }
+.wcard__badge { position: absolute; right: .8rem; bottom: .8rem; padding: .4rem .9rem; border-radius: 999px; background: var(--accent); color: #fff; font-size: .82rem; font-weight: 600; opacity: 0; transform: translateY(8px); transition: opacity .35s, transform .45s var(--ease); }
+.wcard__btn--link { cursor: pointer; }
+.wcard__ext { transition: color .3s; }
+.wcard__ext span { display: inline-block; color: var(--accent); transition: transform .35s var(--ease); }
+.wcard__ext:hover { color: var(--accent); }
+.wcard__ext:hover span { transform: translate(2px, -2px); }
+.wcard__btn--link:hover .wcard__badge, .wcard__btn--link:focus-visible .wcard__badge { opacity: 1; transform: none; }
+@media (hover: none) { .wcard__badge { opacity: 1; transform: none; } }
+
 /* ─────────────── project grid (Work page) ─────────────── */
 .section--work { padding-bottom: clamp(4rem, 8vw, 6rem); }
 .masonry { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2.6vw, 2rem); align-items: start; }

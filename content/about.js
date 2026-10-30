@@ -31,7 +31,7 @@ export const team = [
   { name: "Yash Duse", role: "Social Marketing", photo: "/images/about/team/yash-duse.jpg" },
   { name: "Vickey Yadav", role: "Graphic Design", photo: "/images/about/team/vickey-yadav.jpg" },
   { name: "Rushikesh Patkar", role: "Editing", photo: "/images/about/team/rushikesh-patkar.jpg" },
-  { name: "Amar Borse", role: "Web Developer", photo: "/images/about/team/amar-patil.jpg" },
+  { name: "Amar Patil", role: "Web Developer", photo: "/images/about/team/amar-patil.jpg" },
   { name: "Dhanjay Pawar", role: "Web Developer", photo: "/images/about/team/dhanjay-pawar.jpg" },
   // NOTE: the PDF also names this person "Yash Duse – Social Marketing". Change it if that's a mistake.
   { name: "Yash Duse", role: "Social Marketing", photo: "/images/about/team/yash-duse-2.jpg" },
