@@ -93,8 +93,6 @@ export default function WorkShowcase({ projects, autoplay = 2800 }) {
     return { x: `${s * X[a]}%`, rotateY: -s * R[a], z: Z[a], scale: S[a], opacity: 1 };
   };
 
-  const current = ring[active];
-  const realIndex = active % n;
 
   return (
     <div
@@ -176,14 +174,6 @@ export default function WorkShowcase({ projects, autoplay = 2800 }) {
         <button type="button" className="cflow__btn" onClick={() => go(-1)} aria-label="Previous project">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
-        <div className="cflow__dots">
-          {projects.map((p, i) => (
-            <button key={p.id} type="button" className={`cflow__dot ${i === realIndex ? "is-active" : ""}`}
-              onClick={() => setActive(Math.floor(active / n) * n + i)}
-              aria-label={`Show ${p.title}`} aria-current={i === realIndex ? "true" : undefined} />
-          ))}
-        </div>
-        <Link href={current.href} className="cflow__open" {...(current.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{current.external ? "Visit website" : "View project"} <span aria-hidden="true">{current.external ? "↗" : "➔"}</span></Link>
         <button type="button" className="cflow__btn" onClick={() => go(1)} aria-label="Next project">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
