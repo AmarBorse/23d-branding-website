@@ -54,16 +54,16 @@ export const site = {
     text: "Have a project, idea or brand that needs a better direction?",
   },
 
-  email: "hello@23dstudio.com",
+  email: "info@23dstudio.com",
   location: "Nashik, Maharashtra, India",
   // Green chat button in the footer. Put your WhatsApp link here, e.g. "https://wa.me/919800000000".
   // Leave empty to send visitors to the contact page.
   whatsapp: "",
   // Replace the links with the real profiles.
   socials: [
-    { label: "Facebook", href: "https://facebook.com/" },
-    { label: "Instagram", href: "https://instagram.com/" },
-    { label: "Pinterest", href: "https://pinterest.com/" },
+    { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/23d.branding/" },
+    { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/people/23DBranding/61591582718572/" },
+    { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/company/23-d-branding/" },
   ],
   nav: [
     { label: "Work", href: "/work" },

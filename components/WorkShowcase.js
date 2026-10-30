@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1];
-const spring = { type: "spring", stiffness: 170, damping: 28, mass: 1 };
+const spring = { type: "spring", stiffness: 240, damping: 30, mass: 0.9 };
 
 // "Our Work": a curved row of five panels.
 // The active project stands in the middle, the others step back on each side and turn towards you.
@@ -37,7 +37,7 @@ function TiltCard({ children, disabled }) {
   );
 }
 // `projects` = list from lib/showcase.js: { id, title, image, href, external }
-export default function WorkShowcase({ projects, autoplay = 4500 }) {
+export default function WorkShowcase({ projects, autoplay = 2800 }) {
   const n = projects.length;
   // repeat the projects so there are always enough panels for both sides
   const ring = useMemo(() => {

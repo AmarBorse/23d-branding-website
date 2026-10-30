@@ -5,6 +5,7 @@
 //  slug: add the project's slug (from content/projects.js) to open its page on click;
 //        without a slug the image opens large instead.
 //  url:  a live website address; the image (and title) then open that website in a new tab.
+//  homeImage: optional tall image used in the home page "Our Work" slider instead of `image`.
 // ─────────────────────────────────────────────────────────────
 export const workIntro =
   "Every project starts with a different challenge. Our work reflects the process of understanding those challenges and translating them into thoughtful design solutions.";
@@ -21,9 +22,9 @@ export const workCategories = [
   {
     id: "web-design", label: "Web Design & Development", layout: "two", ratio: "460 / 245",
     items: [
-      { title: "Little Sukis (Clothing Brand)", image: "/images/work/web-little-sukis.jpg", url: "https://littlesukis.com/" },
-      { title: "Divyachetna Social Foundation (NGO)", image: "/images/work/web-divyachetna.jpg", url: "https://www.divyachetna.org.in/" },
-      { title: "The Design Atelier TDA (Architectural Firm)", image: "/images/work/web-design-atelier.jpg", url: "https://thedesignatelier.co.in/" },
+      { title: "Little Sukis (Clothing Brand)", image: "/images/work/web-little-sukis.jpg", url: "https://littlesukis.com/", homeImage: "/images/work/web-little-sukis-mobile.jpg" },
+      { title: "Divyachetna Social Foundation (NGO)", image: "/images/work/web-divyachetna.jpg", url: "https://www.divyachetna.org.in/", homeImage: "/images/work/web-divyachetna-mobile.jpg" },
+      { title: "The Design Atelier TDA (Architectural Firm)", image: "/images/work/web-design-atelier.jpg", url: "https://thedesignatelier.co.in/", homeImage: "/images/work/web-design-atelier-mobile.jpg" },
     ],
   },
   {

@@ -4,7 +4,7 @@ import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motio
 
 // Soft green cursor ring that trails the mouse (desktop only).
 // Grows over links and buttons; hides over project and service images (they show their own centred arrow).
-const VIEW = ".cflow__link, .stile__link, .wshow__link, .wcard__btn, [data-cursor='view']";
+const VIEW = ".stile__link, .wshow__link, .wcard__btn, [data-cursor='view']";
 
 export default function Cursor() {
   const [enabled, setEnabled] = useState(false);
