@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ImageField from "./ImageField";
 import GalleryField from "./GalleryField";
+import PdfImport from "./PdfImport";
 
 const empty = {
   name: "", title: "", caption: "", category: "", cardImage: "", cardPosition: "", homeImage: "", url: "",
@@ -58,6 +59,24 @@ export default function ProjectForm({ id, categories }) {
         <Link href="/admin" className="adm-back">← All projects</Link>
         <h1>{isNew ? "New project" : `Edit: ${p.name || p.caption}`}</h1>
       </div>
+
+      <PdfImport folder={folder} onApply={(d) => {
+        setP((prev) => {
+          const name = d.name || prev.name;
+          return {
+            ...prev,
+            name,
+            title: prev.title || name,
+            description: d.description || prev.description,
+            page: true,
+            hero: d.hero || prev.hero,
+            cardImage: prev.cardImage || d.hero,
+            gallery: [...prev.gallery, ...d.gallery],
+            slug: slugTouched ? prev.slug : slugify(name),
+          };
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }} />
 
       <form onSubmit={save} className="adm-form">
         <section className="adm-card">

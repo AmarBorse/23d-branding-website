@@ -71,3 +71,17 @@
   .adm-list li { flex-wrap: wrap; }
   .adm-list__tools { width: 100%; justify-content: flex-end; }
 }
+
+.adm-pdf { border-style: dashed; border-color: #b9d9c6; background: #fbfefc; }
+.adm-pdf__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.adm-pdf__head h2 { margin-bottom: .3rem; }
+.adm-pdf__step { margin-top: .8rem; font-weight: 600; color: #2e7d4f; }
+.adm-pdf__result { margin-top: 1rem; }
+.adm-pdf__result dl { display: grid; grid-template-columns: 150px 1fr; gap: .4rem 1rem; margin: 0 0 1rem; font-size: .92rem; }
+.adm-pdf__result dt { color: var(--muted); }
+.adm-pdf__result dd { margin: 0; }
+.adm-pdf .adm-gallery img { aspect-ratio: auto; max-height: 220px; object-fit: contain; background: #eee; }
+.adm-pdf .adm-gallery li.is-off { opacity: .4; }
+.adm-pdf__tools { justify-content: space-between; }
+.adm-pdf__tools label { display: flex; align-items: center; gap: .3rem; font-size: .85rem; cursor: pointer; }
+.adm-pdf__head .adm-btn { white-space: nowrap; flex-shrink: 0; }
