@@ -1,11 +1,14 @@
 import { notFound } from "next/navigation";
-import { getAllProjects, getProjectBySlug } from "@/lib/data";
+import { getProjectBySlug, getProjectPageSlugs } from "@/lib/data";
 import FadeIn from "@/components/FadeIn";
 import CaseImage from "@/components/CaseImage";
 import CtaSpotlight from "@/components/CtaSpotlight";
 
+export const revalidate = 300;
+export const dynamicParams = true; // new projects from the admin panel get their page straight away
+
 export async function generateStaticParams() {
-  return (await getAllProjects()).map((p) => ({ slug: p.slug }));
+  return (await getProjectPageSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {

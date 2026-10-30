@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { getShowcaseItems } from "@/lib/showcase";
+import { getShowcaseItems } from "@/lib/data";
 import { services } from "@/content/services";
 import HeroHome from "@/components/HeroHome";
 import ImageHeading from "@/components/ImageHeading";
@@ -11,7 +11,10 @@ import CtaSpotlight from "@/components/CtaSpotlight";
 import Rule from "@/components/Rule";
 import DrawReveal from "@/components/DrawReveal";
 
-export default function Home() {
+export const revalidate = 300; // also refreshed right away when the admin saves
+
+export default async function Home() {
+  const showcase = await getShowcaseItems();
   return (
     <>
       <HeroHome />
@@ -47,7 +50,7 @@ export default function Home() {
       <section className="ourwork">
         <div className="container">
           <ImageHeading src="/images/our-work.png" alt="Our Work" width={1208} height={216} className="ourwork__title" />
-          <WorkShowcase projects={getShowcaseItems()} />
+          <WorkShowcase projects={showcase} />
         </div>
       </section>
 

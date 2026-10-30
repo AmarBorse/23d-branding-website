@@ -1,12 +1,6 @@
 import "./globals.css";
 import { site } from "@/content/site";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
-import ScrollProgress from "@/components/ScrollProgress";
-import BackToTop from "@/components/BackToTop";
-import Preloader from "@/components/Preloader";
-import Cursor from "@/components/Cursor";
+import SiteChrome from "@/components/SiteChrome";
 
 export const metadata = {
   title: { default: `${site.fullName} | Brands made to stand out`, template: `%s | ${site.fullName}` },
@@ -32,16 +26,7 @@ export default function RootLayout({ children }) {
         <link rel="preload" href="/images/hero-bg.jpg" as="image" />
       </head>
       <body>
-        <a href="#main" className="skip">Skip to content</a>
-        <Preloader />
-        <Cursor />
-        <SmoothScroll>
-          <ScrollProgress />
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-          <BackToTop />
-        </SmoothScroll>
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );
