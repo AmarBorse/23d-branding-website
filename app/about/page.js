@@ -2,8 +2,8 @@ import { about, team } from "@/content/about";
 import AboutHero from "@/components/AboutHero";
 import ImageHeading from "@/components/ImageHeading";
 import FadeIn from "@/components/FadeIn";
-import Rule from "@/components/Rule";
-import DrawReveal from "@/components/DrawReveal";
+import HeadRow from "@/components/HeadRow";
+import LineDraw from "@/components/LineDraw";
 import TeamSlider from "@/components/TeamSlider";
 import CtaSpotlight from "@/components/CtaSpotlight";
 
@@ -16,38 +16,34 @@ export default function About() {
 
       {/* Who we are */}
       <section className="who">
-        <DrawReveal className="who__art" src="/images/about/illustration-team-talk.png" width={594} height={182} />
-        <div className="container who__inner">
-          <ImageHeading src="/images/who-we-are.png" alt="Who we are" width={1517} height={216} className="who__title" />
-          <FadeIn className="who__text" delay={0.15}>
+        <div className="pdfwrap">
+          <HeadRow light y0={405} y1={560}
+            art={{ src: "/images/about/illustration-who.png", box: [0, 410, 356, 556] }}
+            heading={{ src: "/images/who-we-are.png", alt: "Who we are", w: 1519, h: 215, box: [438.33, 479.33, 944.67, 551] }} />
+          <FadeIn className="pdftext pdftext--right who__text" delay={0.15}>
             {about.who.map((p, i) => (
               <p key={i}>{p.text ?? <>{p.before}<strong className="accent">{p.highlight}</strong>{p.after}</>}</p>
             ))}
           </FadeIn>
+          <LineDraw className="pdfrule pdfrule--light" origin="right" style={{ marginLeft: "5.47%", width: "90.72%" }} />
         </div>
-        <div className="container"><Rule className="who__rule" /></div>
       </section>
 
       {/* Vision + Mission */}
       <section className="dark vm">
-        <div className="container">
-          <div className="vm__block">
-            <div className="vm__head">
-              <ImageHeading src="/images/our-vision.png" alt="Our Vision" width={1104} height={194} className="vm__title vm__title--vision" />
-              <DrawReveal className="vm__art vm__art--vision" src="/images/about/illustration-vision.png" width={332} height={187} delay={0.2} />
-            </div>
-            <Rule className="rule--light vm__rule" />
-            <FadeIn as="p" className="vm__text" delay={0.2}>{about.vision}</FadeIn>
-          </div>
+        <div className="pdfwrap">
+          <HeadRow y0={812} y1={936}
+            art={{ src: "/images/about/illustration-vision.png", box: [678, 817, 881, 933] }}
+            heading={{ src: "/images/our-vision.png", alt: "Our Vision", w: 1103, h: 193, box: [63.67, 832, 431.33, 896.33] }}
+            rule={[58, 678.5, 919.5]} ruleFrom="right" />
+          <FadeIn as="p" className="pdftext vm__text" delay={0.15}>{about.vision}</FadeIn>
 
-          <div className="vm__block vm__block--right">
-            <div className="vm__head">
-              <DrawReveal className="vm__art vm__art--mission" src="/images/about/illustration-mission.png" width={478} height={290} delay={0.2} />
-              <ImageHeading src="/images/our-mission.png" alt="Our Mission" width={1243} height={193} className="vm__title vm__title--mission" />
-            </div>
-            <Rule className="rule--light vm__rule vm__rule--full" origin="right" />
-            <FadeIn as="p" className="vm__text" delay={0.2}>{about.mission}</FadeIn>
-          </div>
+          <div className="vm__gap" />
+          <HeadRow y0={1042} y1={1186}
+            art={{ src: "/images/about/illustration-mission.png", box: [58, 1047, 252, 1183] }}
+            heading={{ src: "/images/our-mission.png", alt: "Our Mission", w: 1242, h: 195, box: [551.33, 1084, 965.33, 1149] }}
+            rule={[251.5, 968, 1171.5]} />
+          <FadeIn as="p" className="pdftext pdftext--right vm__text" delay={0.15}>{about.mission}</FadeIn>
         </div>
       </section>
 
@@ -78,29 +74,26 @@ export default function About() {
 
       {/* Process */}
       <section className="dark aprocess">
-        <div className="container">
-          <div className="aprocess__head">
-            <DrawReveal className="aprocess__art" src="/images/about/illustration-process.png" width={478} height={271} />
-            <div className="aprocess__titlebox">
-              <ImageHeading src="/images/our-process.png" alt="Our Process" width={1469} height={213} className="aprocess__title" />
-            </div>
-          </div>
-          <Rule className="rule--light aprocess__rule" origin="right" />
-          <DrawReveal className="aprocess__diagram" src="/images/about/process-diagram.png" width={684} height={260} delay={0.2} />
+        <div className="pdfwrap">
+          <HeadRow y0={1764} y1={1918}
+            art={{ src: "/images/about/illustration-process.png", box: [28, 1769, 229, 1916] }}
+            heading={{ src: "/images/our-process.png", alt: "Our Process", w: 1470, h: 213, box: [478.33, 1811, 968.33, 1882] }}
+            rule={[228.5, 967, 1895.5]} />
+          <FadeIn className="aprocess__diagram" y={0} delay={0.1}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/about/process-diagram.png" alt="" width={684} height={260} loading="lazy" />
+          </FadeIn>
           <p className="sr-only">Vision and problem lead to a concept; the concept goes through repeated design and build cycles until it becomes the product.</p>
         </div>
       </section>
 
       {/* Team */}
       <section className="ateam">
-        <div className="container">
-          <div className="ateam__head">
-            <div className="ateam__titlebox">
-              <ImageHeading src="/images/our-team.png" alt="Our Team" width={1020} height={188} className="ateam__title" />
-            </div>
-            <DrawReveal className="ateam__art" src="/images/about/illustration-team-talk.png" width={594} height={182} delay={0.2} />
-          </div>
-          <Rule className="ateam__rule" />
+        <div className="pdfwrap">
+          <HeadRow light y0={2270} y1={2402}
+            art={{ src: "/images/about/illustration-team.png", box: [650, 2275, 967, 2400] }}
+            heading={{ src: "/images/our-team.png", alt: "Our Team", w: 1020, h: 188, box: [57, 2277.33, 397, 2340] }}
+            rule={[58, 650.5, 2362.5]} ruleFrom="right" />
         </div>
         <TeamSlider team={team} />
       </section>
