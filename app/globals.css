@@ -836,3 +836,6 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
 /* home slider: the centre image is in colour, the others stay black-and-white (no hover needed) */
 .cflow__card.is-active .cflow__link img:not(.cflow__backdrop) { filter: grayscale(0) contrast(1); transition: filter 1s var(--ease) .15s; }
+
+/* contact form: hidden anti-spam field */
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
