@@ -5,7 +5,7 @@ import { slugify } from "@/lib/seed";
 export const json = (data, status = 200) => NextResponse.json(data, { status });
 
 // refresh every page that shows projects
-export function refreshSite() { revalidateTag("projects"); revalidatePath("/", "layout"); }
+export function refreshSite() { revalidateTag("projects"); revalidateTag("team"); revalidatePath("/", "layout"); }
 
 const str = (v, max = 2000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 const img = (v) => { const s = str(v, 1000); return s.startsWith("/") || s.startsWith("https://") ? s : ""; };

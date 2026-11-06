@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function AdminDashboard({ categories }) {
-  const router = useRouter();
   const search = useSearchParams();
   const [projects, setProjects] = useState([]);
   const [status, setStatus] = useState(null);
@@ -47,7 +46,6 @@ export default function AdminDashboard({ categories }) {
     setMsg(res.ok ? "Project deleted." : "Could not delete.");
     load();
   };
-  const logout = async () => { await fetch("/api/admin/logout", { method: "POST" }); router.replace("/admin/login"); };
 
   return (
     <div className="adm-wrap">
@@ -57,9 +55,7 @@ export default function AdminDashboard({ categories }) {
           <p className="adm-muted">Add, edit and order the projects shown on the website.</p>
         </div>
         <div className="adm-row">
-          <a href="/work" target="_blank" rel="noreferrer" className="adm-btn adm-btn--ghost">View website ↗</a>
           {canEdit && <Link href="/admin/projects/new" className="adm-btn adm-btn--primary">+ New project</Link>}
-          <button className="adm-btn adm-btn--ghost" onClick={logout}>Log out</button>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
-import { about, team } from "@/content/about";
+import { about } from "@/content/about";
+import { getTeam } from "@/lib/data";
 import AboutHero from "@/components/AboutHero";
 import ImageHeading from "@/components/ImageHeading";
 import FadeIn from "@/components/FadeIn";
@@ -9,7 +10,10 @@ import CtaSpotlight from "@/components/CtaSpotlight";
 
 export const metadata = { title: "About" };
 
-export default function About() {
+export const revalidate = 300; // also refreshed right away when the admin saves
+
+export default async function About() {
+  const team = await getTeam();
   return (
     <>
       <AboutHero />
