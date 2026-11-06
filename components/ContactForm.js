@@ -1,21 +1,30 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/content/site";
 
 const needs = ["Brand Identity", "Website", "Social Media", "Packaging & CGI", "Brochure & Collateral", "Not sure yet"];
 
-// Works with no backend: opens the visitor's email app with everything filled in.
-// For a real inbox form, see README (Formspree / Web3Forms).
+// Sends the enquiry to the admin panel ("Enquiries" tab).
+// If that ever fails, it opens the visitor's email app with everything filled in instead.
 export default function ContactForm() {
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "", needs: [] });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", message: "", needs: [], website: "" });
   const [errors, setErrors] = useState({});
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState(false); // "saved" | "email" | false
+  const [sending, setSending] = useState(false);
+  const shownAt = useRef(0);
+  useEffect(() => { shownAt.current = Date.now(); }, []);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const toggleNeed = (n) => set("needs", form.needs.includes(n) ? form.needs.filter((x) => x !== n) : [...form.needs, n]);
 
-  const submit = (e) => {
+  const openEmail = () => {
+    const body = `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nCompany: ${form.company}\nLooking for: ${form.needs.join(", ")}\n\n${form.message}`;
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent("New project enquiry from " + form.name)}&body=${encodeURIComponent(body)}`;
+    setSent("email");
+  };
+
+  const submit = async (e) => {
     e.preventDefault();
     const err = {};
     if (!form.name.trim()) err.name = "Add your name so we know who to reply to.";
@@ -23,9 +32,20 @@ export default function ContactForm() {
     if (form.message.trim().length < 10) err.message = "Tell us a little about the project (at least 10 characters).";
     setErrors(err);
     if (Object.keys(err).length) return;
-    const body = `Name: ${form.name}\nEmail: ${form.email}\nCompany: ${form.company}\nLooking for: ${form.needs.join(", ")}\n\n${form.message}`;
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent("New project enquiry from " + form.name)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, elapsed: Date.now() - shownAt.current }),
+      });
+      const d = await res.json().catch(() => ({}));
+      if (res.ok) setSent("saved");
+      else if (d.fallback) openEmail();
+      else setErrors({ message: d.error || "Something went wrong. Please try again." });
+    } catch {
+      openEmail();
+    }
+    setSending(false);
   };
 
   return (
@@ -38,9 +58,19 @@ export default function ContactForm() {
             <motion.path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" strokeWidth="3"
               initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.5 }} />
           </motion.svg>
-          <h3>Your email is ready to send</h3>
-          <p>We&apos;ve opened your email app with the details filled in. Press send and we&apos;ll get back to you soon.</p>
-          <button className="btn btn--ghost" onClick={() => setSent(false)}>Edit enquiry</button>
+          {sent === "saved" ? (
+            <>
+              <h3>Thank you, {form.name.split(" ")[0]}!</h3>
+              <p>Your enquiry has reached us. We&apos;ll get back to you at {form.email} soon.</p>
+              <button className="btn btn--ghost" onClick={() => { setSent(false); setForm({ name: "", email: "", phone: "", company: "", message: "", needs: [], website: "" }); shownAt.current = Date.now(); }}>Send another enquiry</button>
+            </>
+          ) : (
+            <>
+              <h3>Your email is ready to send</h3>
+              <p>We&apos;ve opened your email app with the details filled in. Press send and we&apos;ll get back to you soon.</p>
+              <button className="btn btn--ghost" onClick={() => setSent(false)}>Edit enquiry</button>
+            </>
+          )}
         </motion.div>
       ) : (
         <motion.form key="form" className="cform" onSubmit={submit} noValidate exit={{ opacity: 0, y: -20 }}>
@@ -58,11 +88,17 @@ export default function ContactForm() {
             <Field id="name" label="Your name" value={form.name} onChange={(v) => set("name", v)} error={errors.name} />
             <Field id="email" type="email" label="Email" value={form.email} onChange={(v) => set("email", v)} error={errors.email} />
           </div>
-          <Field id="company" label="Company or organisation (optional)" value={form.company} onChange={(v) => set("company", v)} />
+          <div className="cform__row">
+            <Field id="phone" type="tel" label="Phone / WhatsApp (optional)" value={form.phone} onChange={(v) => set("phone", v)} />
+            <Field id="company" label="Company or organisation (optional)" value={form.company} onChange={(v) => set("company", v)} />
+          </div>
+          {/* hidden from people; bots fill it in */}
+          <input className="hp-field" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+            value={form.website} onChange={(e) => set("website", e.target.value)} />
           <Field id="message" label="Tell us about the project" textarea value={form.message} onChange={(v) => set("message", v)} error={errors.message} />
 
 
-          <motion.button type="submit" className="btn btn--dark btn--lg" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>Send enquiry</motion.button>
+          <motion.button type="submit" className="btn btn--dark btn--lg" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} disabled={sending}>{sending ? "Sending…" : "Send enquiry"}</motion.button>
         </motion.form>
       )}
     </AnimatePresence>
